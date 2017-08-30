@@ -1,0 +1,190 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+
+
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery.mobile.custom.js"></script>
+    <script src="/js/socket.js"></script>
+    <style>
+        * {
+            vertical-align: baseline;
+            font-family: inherit;
+            font-style: inherit;
+            font-size: 100%;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            padding: 5px;
+        }
+        h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
+            margin: 20px 0;
+        }
+        li, dd, blockquote {
+            margin-left: 40px;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        html { overflow:  hidden; }
+        body{
+            background: #000000;
+            color: #FFFFFF;
+            /*cursor: none;*/
+
+        }
+       #speedometr{
+            margin: 150px 0px 0px 70px;
+     
+            position: absolute;
+        
+       }
+       #tahometr{
+         margin: 150px 0px 0px 710px;
+     
+         position: absolute;
+       }
+       .motor{
+        width: 150px;
+        display: none;
+       }
+       #motor{
+       margin: 100px 0px 0px 565px;
+        width: 1280px;
+       }
+       #subscribe{
+        position: absolute;
+       }
+       #icons img{
+        width: 100px;
+       }
+        .fari0_1{
+            display: none;
+        }
+        .fari0_1{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="motor" style="position: absolute;">
+    <img class="motor motor0" src="/img/motor_0.png" />
+    <img class="motor motor1" src="/img/motor_1.png" />
+    <img class="motor motor2" src="/img/motor_2.png" />
+</div>
+<div id="icons" style="position: absolute;">
+    <img class="fari0 fari0_0" src="/img/fari0_0.png" />
+    <img class="fari0 fari0_1" src="/img/fari0_1.png" />
+    <img class="fari0 fari1_0" src="/img/blizh_0.png" />
+    <img class="fari0 fari1_1" src="/img/blizh_1.png" />
+    <img class="fari0 fari2_0" src="/img/dalniy_0.png" />
+    <img class="fari0 fari2_1" src="/img/dalniy_1.png" />
+    <img class="povorot0 povorot0_0" src="/img/povorot0_0.png" />
+    <img class="povorot0 povorot0_1" src="/img/povorot0_1.png" />
+    <img class="povorot1 povorot1_0" src="/img/povorot1_0.png" />
+    <img class="povorot1 povorot1_1" src="/img/povorot1_1.png" />
+    
+</div>
+<canvas id="speedometr" width="500" height="500">
+
+</canvas>
+<canvas id="tahometr" width="500" height="500">
+
+</canvas>
+
+
+
+
+</body>
+</html>
+<script src="/js/speedometr.js"></script>
+<script src="/js/tahometr.js"></script>
+<script>
+
+speedometr()(180)
+tahometr()(8000)
+
+var i =0
+setInterval(function(){
+    if (i>180){i=0;}
+    speedometr()(i++)
+},30)
+var t =5
+setInterval(function(){
+    if (t>8000){t=0;}
+    tahometr()(t+=10)
+},1)
+
+
+function render(){
+    console.log(STATUS)
+    zazhiganie(STATUS[33])
+    zapusk(STATUS[34])
+    fari0(STATUS[35])
+    fari1(STATUS[36])
+    fari2(STATUS[37])
+    povorot0(STATUS[38])
+    povorot1(STATUS[39])
+}
+
+function zazhiganie(data){
+    $(".motor").hide()
+    if (data.val==0){$(".motor0").show()}
+    if (data.val==1){$(".motor1").show()}
+}
+function fari0(data){
+    $(".fari0").hide()
+    if (data.val==0){$(".fari0_0").show()}
+    if (data.val==1){$(".fari0_1").show()}
+}
+function fari1(data){
+    $(".fari1").hide()
+    if (data.val==0){$(".fari1_0").show()}
+    if (data.val==1){$(".fari1_1").show()}
+}
+function fari2(data){
+    $(".fari2").hide()
+    if (data.val==0){$(".fari2_0").show()}
+    if (data.val==1){$(".fari2_1").show()}
+}
+function povorot0(data){
+    $(".povorot0").hide()
+    if (data.val==0){$(".povorot0_0").show()}
+    if (data.val==1){$(".povorot0_1").show()}
+}
+function povorot1(data){
+    $(".povorot1").hide()
+    if (data.val==0){$(".povorot1_0").show()}
+    if (data.val==1){$(".povorot1_1").show()}
+}
+function zapusk(data){
+
+    if (data.val==1){$(".motor1").hide();$(".motor2").show()}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

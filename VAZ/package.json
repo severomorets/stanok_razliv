@@ -1,0 +1,26 @@
+{
+  "name": "vaz2121",
+  "version": "1.0.0",
+  "description": "",
+  "main": "config.js",
+  "dependencies": {
+    "johnny-five": "^0.10.3",
+    "serialport": "^4.0.5",
+    "ws": "^1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/severomorets/vaz2121.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/severomorets/vaz2121/issues"
+  },
+  "homepage": "https://github.com/severomorets/vaz2121#readme"
+}
