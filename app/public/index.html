@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/app/public/jquery.js"></script>
+    <script src="/app/public/Valve.js"></script>
+    <script src="/app/public/WATER.js"></script>
+    <script src="/app/public/index.js"></script>
+    <link rel="stylesheet" href="/app/public/style.css">
+
+
+    <link rel="stylesheet" href="/app/public/styleBlock.css">
+
+    <style>
+        .builds{
+
+            margin: 10px;
+            background-color: aliceblue;
+            border: 1px solid red;
+
+        }
+        .progress{
+
+            font-weight: bold;
+        }
+        .valves{
+
+            margin: 10px;
+            background-color: aliceblue;
+
+
+        }
+        #addBuilds{
+            margin: 10px;
+        }
+
+        .waterListInit{
+            display: table;
+
+            width: 100%
+        }
+        .cranListInit{
+            display: table;
+            margin: 10px;
+            background-color: #afd9ee;
+            border-radius:6px ;
+            width: 100%
+        }
+        .cranListInit td{
+            vertical-align: top;
+            padding: 3px;
+            border: 1px solid black;
+
+        }
+        .indexBlocks{
+            padding: 20px;
+        }
+        .startProcess{
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            width: 100px;
+        }
+        .stopProcess{
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            display: none;
+            width: 100px;
+        }
+        .progress{
+            width: 0%;
+
+            height: 20px;
+
+            margin: 0px 0px 0px 2px;
+
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+50,207cca+51,7db9e8+100;Blue+Gloss+Default */
+            background: rgb(30,87,153); /* Old browsers */
+            background: -moz-linear-gradient(top, rgba(30,87,153,1) 0%, rgba(41,137,216,1) 50%, rgba(32,124,202,1) 51%, rgba(125,185,232,1) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+        }
+        .progress-bg{
+            width: 100%;
+            background-color: white;
+            height: 20px;
+        }
+        .progress-text{
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: yellow;
+            font-size: 18px;
+            text-shadow: 1px 1px 1px #000;
+            margin: -22px 0px 0px 2px;
+        }
+.crans{
+    width: 100%;
+    display: none;
+}
+        .crans tr td{
+            text-align: center;
+        }
+        .WATERright{
+            display: none;
+        }
+        #calibrationBlock{
+            display: none;
+        }
+        .listAct{
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+37,000000+100&0.65+0,0+27,0+66,0.65+99 */
+            background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 27%, rgba(0,0,0,0) 37%, rgba(0,0,0,0) 66%, rgba(0,0,0,0.65) 99%, rgba(0,0,0,0.65) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 27%,rgba(0,0,0,0) 37%,rgba(0,0,0,0) 66%,rgba(0,0,0,0.65) 99%,rgba(0,0,0,0.65) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%,rgba(0,0,0,0) 27%,rgba(0,0,0,0) 37%,rgba(0,0,0,0) 66%,rgba(0,0,0,0.65) 99%,rgba(0,0,0,0.65) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="bs-component">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Чистый Дом</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li  onclick="TogglTopMenu(1,this)" class=" TogglTopMenu active"><a href="#">Управление</a></li>
+                        <li  onclick="TogglTopMenu(2,this)" class=" TogglTopMenu"><a href="#">Настройки</a></li>
+                        <li  onclick="TogglTopMenu(3,this)" class=" TogglTopMenu"><a href="#">Статистика</a></li>
+                        <li  onclick="TogglTopMenu(4,this)" class=" TogglTopMenu"><a href="#">Запуск</a></li>
+                    </ul>
+
+
+                </div>
+            </div>
+        </nav>
+
+            <div class="row indexBlocks indexBlocks_1"  style="display: block">
+                <div class="col-lg-5">
+                    <div class="well bs-component">
+                    <fieldset>
+                        <legend>Жидкости</legend>
+                    </fieldset>
+                        <a href="#" class="btn btn-primary btn-md" onclick="$('#createWATER').toggle()">Создать жидкость</a>
+                        <div id="createWATER" style="display: none">
+                            <div class="form-group has-warning">
+                                <label class="control-label">Название новой жидкости</label>
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control" id="nameNewWater">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-success" type="button" onclick="createWATER($('#nameNewWater').val())">Создать</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="list-group" id="waterList">
+
+                        </ul>
+
+                        <form class="form-horizontal" style="display: none">
+                            <fieldset>
+                                <legend>Создать тару под жидкость</legend>
+                                <div class="form-group">
+                                    <label for="BuildsName" class="control-label">Название</label>
+                                    <div class="input-group ">
+                                        <input type="text" class="form-control" id="BuildsName" placeholder="Название жидкости">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <label class="control-label">Объем тары</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">мл.</span>
+                                        <input  id="BuildsSize" value="0" placeholder="Объем тары (мл.)" type="number" class="form-control">
+
+                                    </span>
+                                </div>
+                                <div class="form-group">
+
+                                    </div>
+                                <div class="alert alert-dismissible alert-warning" id="calibrationSetting" style="display: none">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <h4>Поставьте тару под кран <span>1</span></h4>
+                                    <p id="dataVi"></p>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-lg-10 col-lg-offset-2">
+                                        <button type="button" class="btn btn-primary" onclick="CalibrationNewBuilds()">Калибровка</button>
+                                        <button type="button" class="btn btn-primary" style="display: none" onclick="saveBuilds()">Сохранить</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div></div>
+
+                </div>
+                <div class="col-lg-7 ">
+                    <div class="well bs-component WATERright" id="calibrationWATER" >
+                        <fieldset>
+                            <legend>Калибровка <span class="badge waterNameActive" ></span>  ID: <span class="badge waterIDActive" ></span></legend>
+                        </fieldset>
+                        <div class="form-group">
+                            <label for="calibrationWATERSize" class="control-label">Объем</label>
+                            <select class="form-control cranListSelectSize" id="calibrationWATERSize"></select>
+                            <label for="calibrationCRANselect" class="control-label">Кран</label>
+                            <select class="form-control" id="calibrationCRANselect" onchange="calibrationCRANinit($(this).val())"></select>
+                        </div>
+                        <div class="well bs-component" id="calibrationBlock">
+                            <div>id крана<span class="label label-default activCranID"></span></div>
+                            <h3>Импульсы  <span  ><h3 class="label label-warning activCranPulse">34</h3></span></h3>
+                            <div class="btn-group btn-group-justified">
+                                <a href="#" class="btn btn-default btn-lg"  onclick="resetActivPulse()">сбросить импульсы</a>
+                                <a href="#" class="btn btn-success btn-lg" onmousedown="initCalibration(1)" onmouseup="initCalibration(0)">ВКЛ</a>
+                                <a href="#" class="btn btn-primary btn-lg" onclick="saveCalibration()">сохранить</a>
+                            </div>
+                        </div>
+
+                        </div>
+
+
+                </div>
+                <div class="col-lg-7 ">
+                    <div class="well bs-component WATERright" id="startWATER" >
+                        <fieldset>
+                            <legend>Розлив <span class="badge waterNameActive" ></span>  ID: <span class="badge waterIDActive" ></span></legend>
+                        </fieldset>
+                        <div>
+                            <div class="form-group">
+                                <label class="control-label"></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Объем тары</span>
+                                    <select class="form-control" id="waterSizeActive" >
+
+                                    </select>
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-danger" onclick="initSizeAllCran($('#waterSizeActive').val())" type="button">Применить ко всем кранам</button>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="well bs-component" id="CranListBlock">
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="col-lg-7 ">
+                    <div class="well bs-component WATERright" id="redactWATER" >
+                        <fieldset>
+                            <legend>Редактирование <span class="badge waterNameActive" >3</span></legend>
+                        </fieldset>
+                        <div class="form-group">
+                            <div class="input-group ">
+                                <span class="input-group-addon">Название</span>
+                                <input type="text" class="form-control" id="redactWATERName">
+
+                            </span>
+                            </div>
+
+                            <label class="control-label">Объем</label>
+                            <div id="watersizeID">
+
+                            </div>
+                            <span class="input-group-btn">
+                              <button class="btn btn-primary activeWATER" onclick="addsizeWATER($(this).attr('dir'))"  type="button">добавить</button>
+                            </span>
+                            <div class="form-group">
+                              <button class="btn btn-success btn-lg activeWATER" onclick="saveRedWATER($(this).attr('dir'))"  type="button">сохранить</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row indexBlocks indexBlocks_2"  style="display: none">
+
+            </div>
+            <div class="row indexBlocks indexBlocks_3"  style="display: none">3333333333333333</div>
+            <div class="row indexBlocks indexBlocks_4"  style="display: none">44444444444</div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+</body>
+</html>
+<script>
+    OPTIONS = {
+        params:false,
+        render:function(data){
+            $("#options").html(`
+            <div>Название: `+data.name+`</div>
+            <div>ТАРА: `+data.size+`</div>
+            <div>импульсы: `+data.pulse+`</div>
+`)
+        }
+    }
+    CRAN = {}
+    WATER = {}
+
+
+    Builds = []
+    Valves = []
+    var setting = {
+        builds:[],
+        valves:[]
+    }
+
+    function addBuilds(){
+$("#addBuilds").show()
+    }
+function saveBuilds(){
+    var name  = $("#BuildsName").val()
+    var size  = $("#BuildsSize").val()
+    $("#BuildsName").val("")
+    $("#BuildsSize").val("")
+    ws.send(JSON.stringify({
+        saveBuilds:{
+            name:name,
+            size:size
+        }
+    }))
+    console.log(name)
+}
+
+    function changeCRAN(cran){
+        $(".pulseCran[dir="+cran._id+"]").text(cran.pulse)
+        $(".pulseAllCran[dir="+cran._id+"]").text(cran.pulseAll)
+        $(".releyCran[dir="+cran._id+"]").text(cran.reley)
+//        $(".initCran[pin=pin_"+cran.pin+"]").text(cran.init)
+//        $(".releyCran[pin=pin_"+cran.pin+"]").text(cran.reley)
+        CRAN[cran._id] = cran
+        if ($('.cranListSelectSize[cran='+cran._id+']')){
+
+            var waterID = $('.cranListSelectSize[cran='+cran._id+']').attr('water')
+    if (waterID){
+        var maxpulse = WATER[waterID].size[$('.cranListSelectSize[cran='+cran._id+']').val()].pulse
+        var prc = Math.floor(cran.pulse*100/maxpulse)
+        $('.progress[cran='+cran._id+']').css({width:prc+'%'})
+        $('.progress-text[cran='+cran._id+']').text(prc+"%")
+        if (prc>100){
+            alert("!!!!!!")
+        }
+    }
+
+
+        }
+
+
+
+
+    }
+    function changeWATER(water){
+        console.log(water.name)
+        $('.waterNameActive').text(water.name)
+        $('.waterIDActive').text(water._id)
+
+        $('.waterName[dir='+water._id+']').text(water.name)
+        for(var i=0;i<water.size.length;i++){
+            $('.waterSize_'+i+'[dir='+water._id+']').text(water.size[i].size)
+            $('.waterPulse_'+i+'[dir='+water._id+']').text(water.size[i].pulse)
+        }
+
+
+        WATER[water._id] = water
+
+
+    }
+
+
+
+
+
+
+    ws = new WebSocket('ws://localhost:7001')
+    ws.onopen = function() {
+        console.log("Соединение установлено.");
+    };
+
+    ws.onclose = function(event) {
+        if (event.wasClean) {
+            console.log('Соединение закрыто чисто');
+        } else {
+            console.log('Обрыв соединения'); // например, "убит" процесс сервера
+        }
+        console.log('Код: ' + event.code + ' причина: ' + event.reason);
+    };
+
+    ws.onmessage = function(event) {
+
+        var data = JSON.parse(event.data)
+        console.log("Получены данные " ,event.data);
+        if (data){
+            if (data.hasOwnProperty('startOptions')){
+                CRAN = data.startOptions.CRAN
+                WATER = data.startOptions.WATER
+                waterListInit()
+
+//                for(var i =0;i<data.startOptions.builds.length;i++){
+//                    Builds[data.startOptions.builds[i].id] = new Build(data.startOptions.builds[i])
+//                    Builds[data.startOptions.builds[i].id].render(true)
+//
+//                }
+//                for(var i =0;i<data.startOptions.valves.length;i++){
+//                    Valves[data.startOptions.valves[i].pin] = new Valve(data.startOptions.valves[i])
+//                    Valves[data.startOptions.valves[i].pin].render(true)
+//                }
+
+            }
+//            if (data.hasOwnProperty('saveBuilds')){
+//
+//                //setting.builds.push(data.saveBuilds)
+//                console.log(data.saveBuilds)
+//                var b = new Build(data.saveBuilds,Builds.length)
+//                b.render()
+//                Builds.push(b)
+//            }
+            if (data.hasOwnProperty('change')){
+                if (data.change.hasOwnProperty('CRAN')){
+                    changeCRAN(data.change.CRAN)
+                }
+                if (data.change.hasOwnProperty('WATER')){
+                    changeWATER(data.change.WATER)
+                }
+                if (data.change.hasOwnProperty('option')){
+
+                    if (data.change.option!=null){
+
+                        if (data.change.option.hasOwnProperty('stopProcess')){
+
+                            $('.stopProcess[dir='+data.change.CRAN._id+']').hide()
+                            $('.startProcess[dir='+data.change.CRAN._id+']').show()
+                        }
+                    }
+
+
+                    //changeWATER(data.change.WATER)
+                }
+
+
+
+            }
+
+
+
+
+
+        }else
+        {
+            console.log("данные пустые")
+        }
+
+    };
+
+    ws.onerror = function(error) {
+        console.log("Ошибка " + error.message);
+    };
+
+</script>

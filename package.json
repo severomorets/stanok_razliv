@@ -1,0 +1,24 @@
+{
+  "name": "stanok_razliv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "ws": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/severomorets/stanok_razliv.git"
+  },
+  "author": "evgeniy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/severomorets/stanok_razliv/issues"
+  },
+  "homepage": "https://github.com/severomorets/stanok_razliv#readme"
+}
