@@ -12,7 +12,7 @@ RELE = new Object()
 CRAN = new Object()
 WATER = new Object()
 USERS = new Array()
-
+BTN = new Array()
 
 
 
@@ -86,7 +86,9 @@ async.series([
     }
     // global.Server.USERS
 }
+    SendEmit = function (id,method,option){
 
+    }
 
 
 

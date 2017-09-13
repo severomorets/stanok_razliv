@@ -51,6 +51,6 @@ exports.createHttp = function(callback) {
         };
         getFile((localFolder + fileName),res,page404,extensions[ext]);
     };
-    http.createServer(requestHandler).listen(3000);
-    callback(null,"SERVER 3000 INIT")
+    http.createServer(requestHandler).listen(8081);
+    callback(null,"SERVER 8081 INIT")
 };

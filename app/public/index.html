@@ -358,7 +358,7 @@ function saveBuilds(){
         $('.progress[cran='+cran._id+']').css({width:prc+'%'})
         $('.progress-text[cran='+cran._id+']').text(prc+"%")
         if (prc>100){
-            alert("!!!!!!")
+            //alert("!!!!!!")
         }
     }
 
@@ -391,7 +391,7 @@ function saveBuilds(){
 
 
 
-    ws = new WebSocket('ws://localhost:7001')
+    ws = new WebSocket('ws://'+window.location.hostname+':7001')
     ws.onopen = function() {
         console.log("Соединение установлено.");
     };
@@ -414,26 +414,16 @@ function saveBuilds(){
                 CRAN = data.startOptions.CRAN
                 WATER = data.startOptions.WATER
                 waterListInit()
-
-//                for(var i =0;i<data.startOptions.builds.length;i++){
-//                    Builds[data.startOptions.builds[i].id] = new Build(data.startOptions.builds[i])
-//                    Builds[data.startOptions.builds[i].id].render(true)
-//
-//                }
-//                for(var i =0;i<data.startOptions.valves.length;i++){
-//                    Valves[data.startOptions.valves[i].pin] = new Valve(data.startOptions.valves[i])
-//                    Valves[data.startOptions.valves[i].pin].render(true)
-//                }
-
             }
-//            if (data.hasOwnProperty('saveBuilds')){
-//
+            if (data.hasOwnProperty('method')){
+                $('.startProcess[dir='+data.CRAN+']').click()
+console.log("!!!!!!!!!!!!!!!!",data)
 //                //setting.builds.push(data.saveBuilds)
 //                console.log(data.saveBuilds)
 //                var b = new Build(data.saveBuilds,Builds.length)
 //                b.render()
 //                Builds.push(b)
-//            }
+            }
             if (data.hasOwnProperty('change')){
                 if (data.change.hasOwnProperty('CRAN')){
                     changeCRAN(data.change.CRAN)

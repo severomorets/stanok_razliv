@@ -5,7 +5,23 @@ exports.createBoard = function(callback) {
 
 
         function changePin($this, id) {
+            $this.digitalRead(CRAN[id].btnPin, function (value) {
 
+                if (value>0){
+                    console.log("value "+CRAN[id].btnPin,value)
+                    console.log(CRAN[id])
+                    SendEmit(id,'startProcess',{
+                        val:value
+                    })
+                }
+
+                // startProcess({
+                //     startProcess:{
+                //         cranID:1
+                //     }
+                //
+                // })
+            })
             $this.digitalRead(CRAN[id].pin, function (value) {
 
 
@@ -34,6 +50,7 @@ exports.createBoard = function(callback) {
         for (var id in CRAN) {
             if (CRAN[id].init) {
                 this.pinMode(CRAN[id].pin, five.Pin.INPUT);
+                this.pinMode(CRAN[id].btnPin, five.Pin.INPUT);
                 RELE[id] = new five.Relay(CRAN[id].releyPin);
                 console.log("INIT pin " + CRAN[id].pin)
                 changePin(this, id)

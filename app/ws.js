@@ -1,3 +1,11 @@
+function startProcess(data){
+    CRAN[data.startProcess.cranID].pulse = 0
+    CRAN[data.startProcess.cranID].maxPulse = data.startProcess.maxpulse
+    RELE[data.startProcess.cranID].on()
+    CRAN[data.startProcess.cranID].reley = true
+    Change(data.startProcess.cranID)
+}
+
 exports.createWS = function(callback) {
     var wss = new WebSocket.Server({ port: 7001 });
     var t = 0;
@@ -48,11 +56,9 @@ exports.createWS = function(callback) {
 
             }
             if (data.hasOwnProperty('startProcess')){
-                CRAN[data.startProcess.cranID].pulse = 0
-                CRAN[data.startProcess.cranID].maxPulse = data.startProcess.maxpulse
-                RELE[data.startProcess.cranID].on()
-                CRAN[data.startProcess.cranID].reley = true
-                Change(data.startProcess.cranID)
+                startProcess(data)
+
+
             }
             if (data.hasOwnProperty('stopProcess')){
 
@@ -60,6 +66,7 @@ exports.createWS = function(callback) {
                 RELE[data.stopProcess.cranID].off()
                 CRAN[data.stopProcess.cranID].reley = false
                 Change(data.stopProcess.cranID)
+
             }
 
 
